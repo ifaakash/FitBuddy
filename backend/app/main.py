@@ -14,20 +14,19 @@ app = FastAPI(
     version="1.0.0",
 )
 
-# CORS middleware
-origins = [
-    o.strip()
-    for o in os.getenv("CORS_ALLOWED_ORIGINS", "http://192.168.1.12:3000").split(",")
-    if o.strip()
-]
+# # CORS middleware
+# origins = [
+#     o.strip()
+#     for o in os.getenv("CORS_ALLOWED_ORIGINS", "http://192.168.1.12:3000").split(",")
+#     if o.strip()
+# ]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"],  # allow all origins
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 # Include routers
 app.include_router(food_logs.router, prefix="/api/food-logs", tags=["Food Logs"])
 app.include_router(ai_analysis.router, prefix="/api/ai", tags=["AI Analysis"])
