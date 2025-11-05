@@ -1,0 +1,45 @@
+name: FitBuddy
+services:
+  db:
+    image: postgres:15@sha256:822f8795764a670160640888508b2a68ea5c4b045012c2de17e1d0447bdbdc99
+    ports:
+      - "5432:5432"
+    container_name: fitbuddy-backend
+    volumes:
+      - fitbuddy_db_volume:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: fitbuddy
+      POSTGRES_PASSWORD: fitbuddy
+      POSTGRES_DB: fitbuddy
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fitbuddy"]
+      interval: 1m30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+    networks:
+      - fitbuddy
+  backend:
+    build: ./backend/
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+    networks:
+      - fitbuddy
+  frontend:
+    build: ./frontend/
+    ports:
+      - 3000:3000
+    depends_on:
+      - backend
+    networks:
+      - fitbuddy
+
+# Docker volume for DB and Backend service
+volumes:
+  fitbuddy_db_volume:
+
+# Bridge network for communication between services
+networks:
+  fitbuddy:

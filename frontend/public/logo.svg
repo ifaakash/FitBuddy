@@ -1,0 +1,12 @@
+<svg width="140" height="36" viewBox="0 0 140 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="fbGrad" x1="0" y1="0" x2="0" y2="36">
+      <stop offset="0%" stop-color="#2563EB"/>
+      <stop offset="100%" stop-color="#1E40AF"/>
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="32" height="32" rx="8" fill="url(#fbGrad)"/>
+  <path d="M12 24v-12h8a3.5 3.5 0 110 7h-6v5h-2zm2-7h6a1.5 1.5 0 100-3h-6v3z" fill="white"/>
+  <text x="42" y="24" font-family="Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial" font-size="20" font-weight="700" fill="#0B1220">Fit</text>
+  <text x="72" y="24" font-family="Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial" font-size="20" font-weight="700" fill="#2563EB">Buddy</text>
+</svg>
