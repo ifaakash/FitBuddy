@@ -2,8 +2,8 @@ name: FitBuddy
 services:
   db:
     image: postgres:15@sha256:822f8795764a670160640888508b2a68ea5c4b045012c2de17e1d0447bdbdc99
-    ports:
-      - "5432:5432"
+    expose:
+      - "5432"
     container_name: fitbuddy-backend
     volumes:
       - fitbuddy_db_volume:/var/lib/postgresql/data
