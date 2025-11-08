@@ -21,7 +21,8 @@ COPY --from=builder /build/next.config.ts ./
 
 # ENV NODE_ENV=production
 
-RUN npm install --omit=dev \
+RUN npm install typescript --save \
+    && npm install --omit=dev \
     && npm cache clean --force
 
 EXPOSE 3000
