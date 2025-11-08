@@ -1,4 +1,5 @@
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_URL || "http://192.168.1.12:8000";
 
 export type MealTime = "morning" | "afternoon" | "evening";
 
@@ -76,7 +77,10 @@ export async function deleteFoodLog(id: number): Promise<void> {
   if (!response.ok) throw new Error("Failed to delete food log");
 }
 
-export async function updateFoodLog(id: number, data: FoodLogCreate): Promise<FoodLog> {
+export async function updateFoodLog(
+  id: number,
+  data: FoodLogCreate,
+): Promise<FoodLog> {
   const response = await fetch(`${API_BASE_URL}/api/food-logs/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
@@ -97,7 +101,9 @@ export async function analyzeFood(foodLogId: number): Promise<FoodAnalysis> {
   return response.json();
 }
 
-export async function getDailySummary(date: string): Promise<{ summary: string; date: string }> {
+export async function getDailySummary(
+  date: string,
+): Promise<{ summary: string; date: string }> {
   const response = await fetch(`${API_BASE_URL}/api/ai/summarize`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -127,4 +133,3 @@ export async function getDietPlan(): Promise<DietPlan> {
   if (!response.ok) throw new Error("Failed to get diet plan");
   return response.json();
 }
-
