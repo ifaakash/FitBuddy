@@ -8,7 +8,7 @@ WORKDIR /build
 COPY requirements.txt .
 
 # Install dependencies
-RUN pip install --user -r requirements.txt # ← Installs to /root/.local
+RUN pip install --user --no-cache-dir -r requirements.txt # ← Installs to /root/.local
 
 ################## RUN APPLICATION ##################
 
@@ -21,7 +21,7 @@ COPY --from=builder /root/.local /root/.local
 
 # Copy the application code
 COPY ./app ./
-COPY .env ./
+# COPY .env ./
 
 ENV PATH=/root/.local/bin:$PATH
 
