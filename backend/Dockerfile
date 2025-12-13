@@ -1,7 +1,7 @@
 ################## INSTALL DEPENDENCIES ##################
 
-# This stage runs with the build context ( as working directory )
-FROM python:3.11-slim as builder
+# This stage runs with the build context ( AS working directory )
+FROM python:3.11-slim AS builder
 
 WORKDIR /build
 
@@ -12,7 +12,7 @@ RUN pip install --user --no-cache-dir -r requirements.txt # ← Installs to /roo
 
 ################## RUN APPLICATION ##################
 
-# This stage runs with the build context ( as working directory )
+# This stage runs with the build context ( AS working directory )
 FROM python:3.11-slim
 
 WORKDIR /backend
