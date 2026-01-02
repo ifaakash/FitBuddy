@@ -18,13 +18,14 @@ ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 
 RUN npm run build
 
-FROM builder AS runner
+FROM baseimage AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
 
-RUN groupdadd --system --gid 1001 nodejs
-RUN useradd --system --uid 1001 nextjs
+# RUN groupadd --system --gid 1001 nodejs
+# RUN useradd --system --uid 1001 nextjs
+RUN addgroup -S nodejs && adduser -S nextjs -G nodejs
 USER nextjs
 
 # Copy necessary assets from the builder stage
