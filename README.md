@@ -1,5 +1,10 @@
 # FitBuddy - Food Tracking & Diet Planning App
 
+![Docker Pulls](https://img.shields.io/docker/pulls/aakashioo/fitbuddy.svg)
+
+[![GitHub](https://img.shields.io/badge/GitHub-FitBuddy-blue?style=for-the-badge&logo=github)](https://github.com/ifaakash/fitbuddy)
+[![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](https://opensource.org/licenses/MIT)
+
 A full-stack web application (PWA) for tracking food intake, analyzing nutrients, and generating personalized diet recommendations using AI.
 
 ## Features
