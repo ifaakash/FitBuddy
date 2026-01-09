@@ -4,12 +4,12 @@ A full-stack web application (PWA) for tracking food intake, analyzing nutrients
 
 ## Features
 
-- 🍽️ **Food Logging**: Log your meals by time (morning, afternoon, evening)
-- 🤖 **AI-Powered Analysis**: Automatic nutrient breakdown (calories, protein, carbs, fats, fiber)
-- 📊 **Daily Summaries**: Get AI-generated summaries of your daily food intake
-- 🎯 **Personalized Diet Plans**: After 3-4 days of logging, receive personalized recommendations
-- 🔄 **Food Replacements**: Get suggestions to replace high-calorie, low-nutrition foods with better alternatives
-- 📱 **PWA Support**: Install as a mobile app on iOS and Android
+- **Food Logging**: Log your meals by time (morning, afternoon, evening)
+- **AI-Powered Analysis**: Automatic nutrient breakdown (calories, protein, carbs, fats, fiber)
+- **Daily Summaries**: Get AI-generated summaries of your daily food intake
+- **Personalized Diet Plans**: After 3-4 days of logging, receive personalized recommendations
+- **Food Replacements**: Get suggestions to replace high-calorie, low-nutrition foods with better alternatives
+- **PWA Support**: Install as a mobile app on iOS and Android
 
 ## Tech Stack
 
@@ -175,4 +175,3 @@ MIT
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
-
