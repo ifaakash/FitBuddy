@@ -1,33 +1,43 @@
 # No SHA for images, as it might lead to architecture dependencies
 # Build might fail due to incompatible architecture
-FROM node:25.1.0-alpine AS builder
+
+FROM node:25.1.0-alpine as baseimage
+
+FROM baseimage AS builder
 WORKDIR /build
 
 COPY package*.json ./
 
-RUN npm ci \
-    && npm config set fund false \
-    && npm config set audit false
+RUN npm ci
 
+COPY . .
+
+# Set build-time arguments
 ARG NEXT_PUBLIC_API_URL
 ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 
-COPY . .
 RUN npm run build
 
-FROM node:25.1.0-alpine AS runner
+FROM builder AS runner
 WORKDIR /app
 
-COPY --from=builder /build/public/ ./public
-COPY --from=builder /build/.next/ ./.next
-COPY --from=builder /build/package*.json ./
-COPY --from=builder /build/next.config.ts ./
+ENV NODE_ENV=production
 
-# ENV NODE_ENV=production
+RUN groupdadd --system --gid 1001 nodejs
+RUN useradd --system --uid 1001 nextjs
+USER nextjs
 
-RUN npm install typescript --save \
-    && npm install --omit=dev \
-    && npm cache clean --force
+# Copy necessary assets from the builder stage
+COPY --from=builder /build/public ./public
 
+# Copy standalone output and static assets
+COPY --from=builder --chown=nextjs:nodejs /build/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /build/.next/static ./.next/static
+
+USER nextjs
+
+# Expose the port the app runs on
 EXPOSE 3000
-CMD ["npm", "start"]
+
+# The command to start the app
+CMD ["node", "server.js"]
