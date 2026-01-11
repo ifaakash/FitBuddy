@@ -1,11 +1,11 @@
 name: FitBuddy
 services:
   db:
-    image: postgres:15@sha256:822f8795764a670160640888508b2a68ea5c4b045012c2de17e1d0447bdbdc99
+    image: postgres:15
     # the user dont need to access the database, so this should only be expose internally, for other containers
     expose:
       - "5432"
-    container_name: db
+    container_name: fitbuddy_db
     volumes:
       - fitbuddy_db_volume:/var/lib/postgresql/data
     environment:
@@ -21,16 +21,24 @@ services:
     networks:
       - fitbuddy
   backend:
-    build: ./backend/
+    build:
+      context: ./backend/
+    container_name: fitbuddy_backend
     ports:
       - 8000:8000
+    env_file:
+      - ./backend/.env.local
     depends_on:
       db:
         condition: service_healthy
     networks:
       - fitbuddy
   frontend:
-    build: ./frontend/
+    build:
+      context: ./frontend/
+      args:
+        - NEXT_PUBLIC_API_URL=http://localhost:8000
+    container_name: fitbuddy_frontend
     ports:
       - 3000:3000
     depends_on:

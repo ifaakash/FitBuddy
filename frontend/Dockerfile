@@ -1,4 +1,6 @@
-FROM node:25.1.0-alpine@sha256:7e467cc5aa91c87e94f93c4608cf234ca24aac3ec941f7f3db207367ccccdd11 AS builder
+# No SHA for images, as it might lead to architecture dependencies
+# Build might fail due to incompatible architecture
+FROM node:25.1.0-alpine AS builder
 WORKDIR /build
 
 COPY package*.json ./
@@ -7,11 +9,13 @@ RUN npm ci \
     && npm config set fund false \
     && npm config set audit false
 
+ARG NEXT_PUBLIC_API_URL
+ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
+
 COPY . .
 RUN npm run build
 
-
-FROM node:25.1.0-alpine@sha256:7e467cc5aa91c87e94f93c4608cf234ca24aac3ec941f7f3db207367ccccdd11  AS runner
+FROM node:25.1.0-alpine AS runner
 WORKDIR /app
 
 COPY --from=builder /build/public/ ./public
