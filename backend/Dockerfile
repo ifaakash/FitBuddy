@@ -1,7 +1,9 @@
 ################## INSTALL DEPENDENCIES ##################
 
 # This stage runs with the build context ( AS working directory )
-FROM python:3.11-slim AS builder
+FROM python:3.11-slim AS baseimage
+
+FROM baseimage AS builder
 
 WORKDIR /build
 
@@ -13,16 +15,22 @@ RUN pip install --user --no-cache-dir -r requirements.txt # ← Installs to /roo
 ################## RUN APPLICATION ##################
 
 # This stage runs with the build context ( AS working directory )
-FROM python:3.11-slim
+FROM baseimage AS runner
 
 WORKDIR /backend
+
+# Create a non-root user
+RUN addgroup --system --gid 1001 appgroup && \
+    adduser --system --uid 1001 --ingroup appgroup appuser
 
 COPY --from=builder /root/.local /root/.local
 
 # Copy the application code
-COPY ./app ./
+COPY --chown=appuser:appgroup ./app ./
 
 ENV PATH=/root/.local/bin:$PATH
+
+USER appuser
 
 EXPOSE 8000
 

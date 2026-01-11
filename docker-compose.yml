@@ -23,6 +23,9 @@ services:
   backend:
     build:
       context: ./backend/
+      platforms:
+        - "linux/amd64"
+        - "linux/arm64"
     container_name: fitbuddy_backend
     ports:
       - 8000:8000
@@ -36,6 +39,9 @@ services:
   frontend:
     build:
       context: ./frontend/
+      platforms:
+        - "linux/amd64"
+        - "linux/arm64"
       args:
         - NEXT_PUBLIC_API_URL=http://localhost:8000
     container_name: fitbuddy_frontend
